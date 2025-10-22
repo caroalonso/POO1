@@ -1,0 +1,63 @@
+@startuml
+
+abstract JobScheduler <<abstract>>{
+ -strategy : String
+
+ + <<create>> JobScheduler(strategy:String) : void
+ + schedule(job:Job) : void
+ + unschedule(job:Job) : void
+ + getJobs() : Job[*]
+ + next() : Job
+ + <<abstract>> estrategia(): Job
+}
+
+class Job {
+ - effort : Real
+ - priority : Integer
+ - description : String
+
+ + <<create>> Job(anEffort:Real,aPriority:Integer, aDescription:String) : void
+ + getEffort() : Real
+ + getPriority() : Integer
+ + getDescription() : String
+}
+
+class Fifo {
+  + next() : Job 
+}
+
+class Lifo {
+  + next() : Job
+}
+
+class HighestPriority {
+ + next() : Job
+}
+
+class MostEffort {
+ + next() : Job
+}
+
+
+class Fifo extends JobScheduler
+class Lifo extends JobScheduler
+class MostEffort extends JobScheduler
+class HighestPriority extends JobScheduler
+JobScheduler --> Job :jobs*
+
+
+@enduml
+
+class MostEffort {
+ + next() : Job
+}
+
+
+class Fifo extends JobScheduler
+class Lifo extends JobScheduler
+class MostEffort extends JobScheduler
+class HighestPriority extends JobScheduler
+JobScheduler --> Job :jobs*
+
+
+@enduml

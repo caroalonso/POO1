@@ -1,0 +1,83 @@
+@startuml
+
+
+class Cubilete {
+
+  + <<create>> Cubilete () : void
+  + agregarDado (dado:Dado) : void
+  + realizarLanzamientoConCubilete () : void
+  - lanzamientoDeDados () : Dados[*] 
+  + sumaTotalDeResultados(): Integer
+  
+}
+
+
+class Resultado {
+  -fechaHora : DateTime
+
+  + <<create>> Resultado (dados:Dado[*]) : void
+  + contarValorDeDados () : Integer
+  + getFechaHora(): DateTime
+  
+}
+
+
+abstract Dado <<abstract>> {
+  - valorDado : Integer
+  - dadoMax : Integer
+  - {static} - RANDOM : Random = new Random
+  
+  + <<create>> Dado (int dadoMax) : void
+  + lanzamientoDado () : Dado
+  # numeroRandomInteger (): Integer
+  # numeroRandomDouble (Real:pesoTotal) : Real
+  + getDadoMax () : Integer
+  + getValorDado () :Integer
+  + {abstract} <<abstract>> valorDeDadoEnLanzamiento() : Integer
+}
+
+
+class DadoEstandar {
+  
+  + <<create>> DadoEstandar () : void
+  + valorDeDadoEnLanzamiento() : Integer
+
+}
+
+class DadoModificador {
+  -valorFijoDado : Integer
+  
+  + <<create>> DadoModificador (valorFijoDado:Integer) : void
+  + valorDeDadoEnLanzamiento() : Integer
+
+}
+
+class DadoExplosivo {
+  
+  + <<create>> DadoExplosivo (dadoMax:Integer) : void
+  - esMax (valor:Integer) : boolean
+  + valorDeDadoEnLanzamiento() : Integer
+
+}
+
+class DadoPonderado {
+  - pesoYvalor: NavigableMap<Real,Integer> 
+  - totalPeso: Real
+  
+  + <<create>> DadoPonderado (valorYpEso:Map<Integer,Real>) : void
+  + valorDeDadoEnLanzamiento() : Integer
+
+}
+
+
+
+Cubilete --> Resultado : resultados*
+Cubilete --> Dado :  dados*
+
+class DadoEstandar extends Dado
+class DadoExplosivo extends Dado
+class DadoPonderado extends Dado
+class DadoModificador extends DadoEstandar
+
+
+@enduml

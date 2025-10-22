@@ -1,0 +1,41 @@
+@startuml
+class WallPostUI {
+  - WallPost wallPost;
+  - JButton console; 
+  - JTextArea textArea;
+  - JLabel featuredLabelTitle;
+  - JCheckBox featuredCheckbox;
+  - JLabel likesLabelTitle;
+  - JLabel likesLabel;
+  - JButton like; 
+  - JButton dislike; 
+  - JFrame window;
+
+  + <<create>> WallPostUI() : void
+  - setUpWindow() : void
+  - wireComponents() : void 
+  + removeUpdate(e:DocumentEvent) : void
+  + insertUpdate(e:DocumentEvent ) : void
+  + changedUpdate(e:DocumentEvent) : void
+  }
+
+class WallPost {
+  -texto : String
+  -cantlikes : Integer;
+  -destacado : boolean
+
+  + +<<create>> WallPost() : void
+  + getText() : String
+  + setText(text:String) : void
+  + getLikes(): Integer
+  + like() : void
+  + dislike() : void
+  + isFeatured() : bolean
+  + toggleFeatured() : void
+  + toString() : String
+  
+}
+
+WallPostUI --> WallPost :1 \n WallPost
+
+@enduml

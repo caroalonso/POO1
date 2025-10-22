@@ -1,0 +1,66 @@
+@startuml
+class ReporteDeConstruccion {
+ 
+ + <<create>> ReporteDeConstruccion() : void
+ + agregarPieza(pieza:Pieza) : void
+ - retornaTotal(filtro: Predicate<Pieza>, operacion: ToDoubleFunction<Pieza>) : Real
+ + superficieDeColor(unNombreDeColor:String) : Real
+ + getSuperficieDeColor(volumenDeMaterial:String) : Real
+}
+
+
+abstract Pieza <<abstract>>{
+ - material : String
+ - color : String
+
+ + <<create>> Pieza()  :void
+ + esMaterial(material:String) : boolean
+ + esColor() : boolean
+ # calculoEnComun(radio:Real,potencia:Integer) : Real
+ + <<abstract>> volumen() : Real
+ + <<abstract>> superficie() : Real
+}
+
+
+class Cilindro{
+ - radio : Real
+ - altura : Real
+ - {static} UNO:integer = 1 {readOnly}
+ - {static} DOS:integer = 2 {readOnly}
+
+ + <<create>> Cilindro(material:String,color:String,radio:Real,altura:Real)  :void
+ + volumen() : Real
+ + superficie() : Real
+}
+
+
+class Esfera{
+ - radio : Real
+ - {static} CUATRO_TERCIOS:real = 4.0/3.0 {readOnly}
+ - {static} DOS:integer = 2 {readOnly}
+ - {static} TRES:integer = 3 {readOnly}
+ - {static} CUATRO:integer = 4 {readOnly}
+
+ + <<create>> Esfera(material:String,color:String,radio:Real) : void
+ + volumen() : Real
+ + superficie() : Real
+}
+
+class PrismaRectangular{
+ - ladoMenor : Real
+ - ladoMayor : Real
+ - altura : Real
+ - {static} DOS:integer = 2 {readOnly}
+ 
+ + <<create>> PrismaRectangular(material:String,color:String,ladoMenor:Real,ladoMayor:Real,altura:Real) : void
+ + volumen() : Real
+ + superficie() : Real
+}
+
+
+ class Cilindro extends Pieza
+ class Esfera extends Pieza
+ class PrismaRectangular extends Pieza
+ ReporteDeConstruccion--> Pieza :piezas*
+
+@enduml

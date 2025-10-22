@@ -1,0 +1,100 @@
+@startuml
+
+class Agencia {
+
+  + <<create>> Agencia () : void
+  + altaContribuyente (nombre:String,dni:String ,email:String,localidad:String) : Contribuyente
+  + altaInmueble (partida:Integer,valorLote:Real,valorEdificacion:Real,contribuyente:Contribuyente) : Inmueble
+  + altaAutomotor (patente:String,marca:String,modelo:String,valor:Real,fechaFabricacion:Date,contribuyente:Contribuyente) : Automotor
+  + altaEmbarcacion (patente:String,nombre:String,valor:Real,fechaFabricacion:Date,contribuyente:Contribuyente) : Embarcacion
+  + contribuyentesConMaxImpuestos(num:Integer,nombreLocalidad:String) : Contribuyente[*]
+
+}
+
+
+class Contribuyente {
+
+  - nombre : String
+  - dni : String
+  - email : String
+  - localidad : String
+
+  + <<create>> Contribuyente (nombre:String,dni:String,email:String,localidad:String) : void
+  + agregarBien (bien:Bien) : void
+  + localidad (nombreLocalidad:String) : boolean
+  + calcularImpuestos() : Real
+
+}
+
+interface Bien <<interface>>{
+  + calcularImpuesto() : Real
+}
+
+
+class Inmueble  {
+
+  - numPartida : Integer
+  - valorLote : Real
+  - valorEdificacion : Real
+
+  + <<create>> Inmueble (numPartida:Integer,valorLote:Real,valorEdificacion:Real) : void
+  + calcularImpuesto() : Real
+  
+}
+
+
+abstract Vehiculo <<abstract>> {
+  - patente : String
+  - fechaFabricacion : Date
+  - valor: Real
+  - {static} DIEZ : Integer = 10  {readOnly}
+  - {static} CERO : Real = 0.0 {readOnly}
+  - {static} MILLON : Real = 1000000 {readOnly}
+  
+
+  + <<create>> Vehiculo (patente:String,fechaFabricacion:Date,valor:Real) : void
+  - cantidadAnios() : Long
+  + calcularImpuesto() : Real
+  + menorAn() : boolean
+  + {abstract} <<abstract>> porcentaje() : Real
+
+}
+
+
+class Automotor {
+
+  - modelo : String
+  - marca : String
+  - {static} PORCENTAJE_CINCO : Real = 0.05 {readOnly}
+
+  + <<create>> Automotor (patente:String,marca:String,modelo:String,valor:Real,fechaFabricacion:Date) : void
+  + porcentaje() : Real
+
+}
+
+
+class Embarcacion {
+
+  - nombre : String
+  - {static} PORCENTAJE_QUINCE : Real = 0.15 {readOnly}
+  - {static} PORCENTAJE_DIEZ :Real = 0.10 {readOnly}
+
+  + <<create>> Embarcacion (patente:String,nombre:String,valor:Real,fechaFabricacion:Date) : void
+  + porcentaje () : Real
+
+}
+
+
+
+
+Agencia --> Contribuyente: contribuyentes*
+Contribuyente --> Bien: bienes*
+
+class Inmueble implements Bien
+class Vehiculo implements Bien
+
+class Embarcacion extends Vehiculo
+class Automotor extends Vehiculo
+
+
+@enduml

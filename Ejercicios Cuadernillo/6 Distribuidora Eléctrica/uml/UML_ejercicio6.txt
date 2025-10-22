@@ -1,0 +1,45 @@
+@startuml
+class CuadroTarifario {
+  - preciokWh : Real
+  
+  + <<create>>CuadroTarifario(preciokWh:Real) : void
+  + getPreciokWh() : Real
+  + setPreciokWh(preciokWh:Real) : void
+  
+}
+
+
+class Factura {
+  - usuario : Usuario
+  - fechaEmicion : Date
+  - bonificacion : Real
+  - montoTotal : Real
+  
+  + <<create>>Factura(usuario:Usuario,bonificacion:Real,montoTotal:Real) : void
+}
+
+class Usuario {
+  - nombre : String
+  - domicilio : String
+  
+  + <<create>>Usuario(nombre:String,domicilio:String) : void
+  + agregarConsumoEnergia(consumo:ConsumoEnergetico) : void
+  - ultimoConsumoDeUsuario(): ConsumoEnergetico
+  + emitirFactura(cuadro:CuadroTarifario) : Factura
+}
+
+class ConsumoEnergetico {
+  - fecha : Date
+  - energiaActiva : Real
+  - energiaReactiva : Real
+  
+  + <<create>>ConsumoEnergetico(energiaActiva:Real,energiaReactiva:Real) : void
+  + fecha() : Date
+  - costoDeConsumo(cuadro:CuadroTarifario) : Real
+  - factorDePotencia() : Real
+  + bonificacion(cuadro:CuadroTarifario) : Real
+  + montoTotal(cuadro:CuadroTarifario) : Real
+}
+
+Usuario --> ConsumoEnergetico : consumosDeEnergia*
+@enduml

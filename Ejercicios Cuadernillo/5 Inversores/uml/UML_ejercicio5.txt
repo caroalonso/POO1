@@ -1,0 +1,42 @@
+@startuml
+
+class Inversor {
+
+  + <<create>> Inversor() : void
+  + agregarInversion(inversion:Inversion) : void 
+  + eliminarInversion(inversion:Inversion) : void
+  + valorTotalActualDeInversiones() : Real
+
+}
+
+
+interface Inversion<<interface>>{
+ + valorActualInversion() : Real
+}
+
+
+class Accion {
+  - nombre : String
+  - cantidadAcciones : Integer
+  - costoPorUnidadDeAccion : Real
+  
+  + <<create>> Accion(nombre:String,antidadAcciones:Integer,costoPorUnidadAccion:Real) : void
+  + valorActualInversion() : Real
+}
+
+
+class PlazoFijo {
+  - fechaDeposito : Date
+  - montoDepositado : Real
+  - interesDiario : Real
+
+  + <<create>> PlazoFijo(fechaDeposito:Date,montoDepositado:Real,interesDiario:Real) : void
+  + valorActualInversion() : Real
+}
+
+
+class Accion implements Inversion
+class PlazoFijo implements Inversion
+Inversor --> Inversion : inversiones*
+
+@enduml

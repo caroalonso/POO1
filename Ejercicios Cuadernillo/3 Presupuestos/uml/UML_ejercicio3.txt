@@ -1,0 +1,26 @@
+@startuml
+class Presupuesto {
+  - fecha: Date {readOnly}
+  - cliente : String
+  
+  + <<create>> Presupuesto(cliente:String) : void
+  + agregarItem(item:Item) : void
+  + calcularTotal() : Real
+}
+
+class Item {
+  - detalle : String
+  - cantidad : Intger
+  - costoUnitario : Real
+  
+  + <<create>> Item() : void
+  + setDetalle(detalle:String) : void
+  + setCantidad(cantidad:Integer) : void
+  + setCostoUnitario(costoUnitario:Real) : void
+  + getCostoUnitario() : Real
+  + costo() : Real
+}
+
+Presupuesto --> Item : items*
+
+@enduml

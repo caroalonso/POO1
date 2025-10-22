@@ -1,0 +1,93 @@
+@startuml
+
+
+class Empresa {
+  + <<create>> Empresa () : void
+  + agregarCliente (nombre:String,direccion:String) : Cliente
+  + agregarServicioLimpieza (precio:Real,cantidadHoras:Integer,tarifaMinima:Real) : ServicioLimpieza 
+  + agregarServicioParquizacion (precio:Real,cantidadHoras:Integer,cantidadMaquinas:Integer,costoMaquinas:Real) : ServicioParquizacion 
+  + serviciosConMontosMayorAvalor (valor:Integer) : Integer
+}
+
+
+class Cliente {
+  - nombre : String
+  - direccion : String 
+
+  + <<create>> Cliente (nombre:String,direccion:String) : void
+  + agregarContratoUnico (fecha:Date,servicio:Servicio) : void
+  + agregarContratoProlongado (fecha:Date,cantidadDias:Integer,servicio:Servicio) : void
+  + obtenerMonto () : Real
+}
+
+
+abstract Servicio <<abstract>> {
+  - precio : Real
+  - cantidadHoras : Integer
+  
+  + <<create>> Servicio (precio:Real,cantidadHoras:Integer) : void
+  + precioPorHora () : Real
+  + {abstract} <<abstract>> montoServicio() : Real
+}
+
+
+abstract Contrato <<abstract>> {
+  - fecha : Date
+  
+  + <<create>> Contrato (fecha:Date,servicio:Servicio) : void
+  + esFinDeSemana () : boolean
+  + getValorServicio () : Real
+  + {abstract} <<abstract>> sumaValorContrato () : Real
+}
+
+
+class ServicioLimpieza {
+  - tarifaMinima : Real
+
+  + <<create>> ServicioLimpieza (precio:Real,cantidadHoras:Integer,tarifaMinima:Real) : void
+  + montoServicio () : Real
+}
+
+
+class ServicioParquizacion {
+  - cantidadMaquinas : Integer
+  - costoMaquinas: Real
+
+  + <<create>> ServicioParquizacion (precio:Real,cantidadHoras:Integer,cantidadMaquinas:Integer,costoMaquinas:Real) : void
+  + maquinaPorCosto () : Real
+  + montoServicio () : Real
+}
+
+
+class ContratoUnico {
+  - {static} MONTO_ADICIONAL : Real = 0.15 {readOnly} 
+
+  + <<create>> ContratoUnico (fecha:Date,servicio:Servicio) : void
+  + sumaValorContrato () : Real
+}
+
+
+class ContratoProlongado {
+  - {static} DESCUENTO : Real = 0.10 {readOnly}
+  - {static} VALOR : Real = 0.10 {readOnly}
+  - cantidadDias : Integer
+
+  + <<create>> ContratoProlongado (fecha:Date,cantidadDias:Integer,servicio:Servicio) : void
+  - valorServicioPorCantidadDeDias () : Real
+  - mayorAvalor(valor:Integer) : boolean
+  + sumaValorContrato () : Real
+}
+
+
+Empresa --> Cliente : clientes*
+Empresa --> Servicio : servicios*
+Cliente --> Contrato : contratos*
+Contrato --> Servicio :  1 
+
+class ServicioParquizacion extends Servicio
+class ServicioLimpieza extends Servicio
+
+class ContratoUnico extends Contrato
+class ContratoProlongado extends Contrato
+
+@enduml

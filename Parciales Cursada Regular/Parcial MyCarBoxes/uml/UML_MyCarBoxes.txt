@@ -1,0 +1,87 @@
+@startuml
+class MyCarBoxes {
+ 
+ + <<create>> MyCarBoxes () : void
+ + altaOrdenCompra(patente:String) : OrdenCompra
+ + altaOrdenReparacion(patente:String,descripcion:String,cantidadHoras:integer) : OrdenReparacion
+ + ordenUltimoAnio(fecha:Date) : boolean 
+ + descuentoOrdenesUltimoAnio(patente:String,fecha:Date) : Real
+ + facturacionOrdenes() : Factura[*]
+}
+
+
+abstract Orden <<abstract>>{
+  - patente : String
+  - fecha : Date
+  - {static} DIEZ_POR_CIENTO:Real = 0.10 {readOnly}
+
+  + <<create>> Patente(patente:Strong) : void
+  + altaRepuesto(nombre:String,costo:Real,fechaFabricacion:Date) : Repuesto
+  + mayorAvalor() : boolean
+  # totalRepuestos() : Real
+  - costoFinal() : Real
+  + facturacion(descuento:Real) : Factura
+  + patente() : String
+  + fecha() : Date
+  + <<abstract>> costo() : Real
+}
+
+
+class Repuesto {
+ - nombre : String
+ - costo : Real
+ - fechaFabricacion : Date
+ - {static} VALOR:integer = 5 {readOnly}
+
+ + <<create>> Repuesto(nombre:String,costo:Real,fechaFabricacion:Date) : void
+ + costo () : Real
+ + validarFecha (): boolean
+}
+
+
+class Empleado {
+ - nombre : String
+ - costoPorHora : Real
+
+ + <<create>> Empleado(nombre:String,costoPorHora:Real) : void
+ + costoPorHora() : Real
+}
+
+
+class Factura{
+ - fecha : Date
+ - patente :String
+ - montoFinal : Real
+ - descuento : Real
+
+ + <<create>> Factura(patente:String,montoFinal:Real,descuento:Real) : void
+}
+
+
+class OrdenCompra {
+ - {static} OCHO_POR_CIENTO:Real = 0.08 {readOnly}
+ - {static} QUINCE_POR_CIENTO:Real = 0.15 {readOnly}
+
+ + OrdenCompra(patente:String) : void
+ + costo():Real
+}
+
+
+class OrdenReparacion {
+ - descripcion : String 
+ - cantidadHoras : Integer
+
+ + <<create>> OrdenReparacion(patente:String,descricion:String,cantidadHoras:integer) : void
+ + altaEmpleado(nombre:String,costo:real) : Empleado
+ - valorDeCobroEmpleados() : Real
+ + costo() : Real
+}
+
+ class OrdenCompra extends Orden
+ class OrdenReparacion extends Orden
+ 
+ MyCarBoxes --> Orden :ordenes*
+ OrdenReparacion --> Empleado :empleados*
+ Orden --> Repuesto :repuestos*
+
+@enduml

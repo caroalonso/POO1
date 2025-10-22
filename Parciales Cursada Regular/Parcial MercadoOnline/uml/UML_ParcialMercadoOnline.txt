@@ -1,0 +1,110 @@
+@startuml
+
+class Mercado {
+  - {static} DIEZ:Integer=10 {readOnly}
+ 
+  + <<create>> Mercado() : void
+  + agregarUsuario(email:String,locadidad:String) : Usuario
+  + publicacionesOrdenadas(localidadDestino:String) : Publicacion[*]
+  + diezMasCaros(localidadDestino:String) : Publicacion[*]
+}
+
+
+class Usuario {
+  - email : String
+  - localidad : String
+  - fechaIngreso : Date
+  - {static} DIEZ:Integer=10 {readOnly}
+
+  + <<create>> Usuario(email:String,localidad:String) : void
+  + agregarServicio(nombre:String,descripcion:String,precio:real) : Servicio
+  + agregarProductoNuevo(nombre:String,descripcion:String,precio:real,cantidad:integer,entrega:Entrega) : Producto
+  + agregarProductoUsado(nombre:String,descripcion:String,precio:Real) : Producto
+  + mayorAvalor(valor:integer) : boolean
+  + distancia(localidadDada:String) : Real
+  + ordenar(localidadDada:String) : Publicacion[*]
+}
+
+
+abstract Publicacion <<abstract>> {
+  - nombre : String
+  - descripcion : String
+  - precio : Real
+
+  + <<create>> Publicacion(nombre:String,descripcion:String,precio:Real) : void
+  + precioFinal(usuario:Usuario,localidadDada:String) : Real
+  + <<abstract>> elPrecioFinal(usuario:Usuario,localidadDada:String) : Real
+}
+
+
+class Servicio {
+  - {static} QUINIENTOS:Integer=500 {readOnly}
+  - {static} OCHOCIENTOS:Integer=800 {readOnly}
+  - {static} OCHO_POR_CIENTO:double=0.08 {readOnly}
+  - {static} CERO:double=0.0 {readOnly}
+  - {static} DIEZ:Integer=10 {readOnly}
+  - {static} UNO:Integer=1 {readOnly}
+  
+  + <<create>> Servicio(nombre:String,descripcion:String,precio:Real) : void
+  - esLocalidad(localidadDada:String) : Integer
+  - descuento(usuario:Usuario) : Real
+  + elPrecioFinal(usuario:Usuario,localidadDada:String) : Real
+}
+
+
+class Producto{
+ - cantidad : integer
+ - {static} UNO:Integer=1 {readOnly}
+ 
+ + <<create>> Producto(nombre:String,descripcion:String,precio:real,cantidad:integer,entrega:Entrega) : void
+ + elPrecioFinal(usuario:Usuario,localidadDada:String) : Real
+}
+
+
+interface Entrega <<interface>>{
++ descuento() : Real
++ costo(usuario:Usuario,localidadDada:String) : Real
+
+}
+
+
+class EntregaCorreo {
+- {static} CINCO_POR_CIENTO:double=0.05 {readOnly}
+- {static} QUINIENTOS:Integer=500 {readOnly}
+ 
+ + <<create>> EntregaCorreo() : void
+ + descuento() : Real
+ + costo(usuario:Usuario,localidadDada:String) : Real
+}
+
+
+class EntregaExpress {
+ - {static} DIEZ_POR_CIENTO:double=0.10 {readOnly}
+
+ + <<create>> EntregaExpress() : void
+ + descuento() : Real
+ + costo(usuario:Usuario,localidadDada:String) : Real
+}
+
+
+class EntregaRetiro {
+ - {static} CERO:double=0.10 {readOnly}
+
+ + <<create>> EntregaRetiro() : void
+ + descuento() : Real
+ + costo(usuario:Usuario,localidadDada:String) : Real
+}
+
+
+Mercado --> Usuario :usuarios *
+Usuario --> Publicacion : publicaciones *
+Producto --> Entrega : entrega 1
+
+class Servicio extends Publicacion
+class Producto extends Publicacion
+
+class EntregaRetiro implements Entrega
+class EntregaExpress implements Entrega
+class EntregaCorreo implements Entrega
+
+@enduml

@@ -1,0 +1,39 @@
+@startuml
+interface TimeInterval <<interface>>{
+ + getFrom() : Date
+ + getTo() : Date
+ + sizeInDays() : Integer
+ + includesDate(other:Date) : boolean
+
+}
+
+class AbstractTimeInterval <<abstract>> {
+  - from :Date
+  
+  + <<create>> AbstractTimeInterval(from:Date) : void
+  + getFrom() : Date
+  + sizeInDays() : Integer
+  + includesDate(fecha:Date) : boolean
+}
+
+class DateLapse {
+  - to : Date
+  
+  + <<create>> DateLapse(from:Date,to:Date) : void
+  + getTo() : Date 
+}
+
+
+class DateLapseTwo {
+  - sizeInDays : Integer
+ 
+  + <<create>> DateLapseTwo(from:Date,sizeInDays:Integer) : void
+  + getTo() : Date
+}
+
+class AbstractTimeInterval implements TimeInterval 
+class DateLapse extends AbstractTimeInterval 
+class DateLapseTwo extends AbstractTimeInterval 
+
+
+@enduml

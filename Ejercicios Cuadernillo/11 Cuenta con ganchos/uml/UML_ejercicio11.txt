@@ -1,0 +1,44 @@
+@startuml
+
+abstract Cuenta<<abstract>>{
+  -saldo : Real
+
+  + <<create>> Cuenta(saldo:Real) : void
+  + getSaldo () : Real
+  + depositar (monto:Real) : boolean
+  + extraer (monto:Real) : boolean
+  + transferirACuenta (monto:Real,cuentaDestino:Cuenta) : boolean
+  # extrarSinControlar (monto:Real) : void
+  + montoMayorAcero (monto:Real) : boolean
+  # <<abstract>> puedeExtraer (monto:Real) : boolean
+}
+
+
+class CuentaCorriente {
+  - limiteDescubierto : Real
+
+  + <<create>> CuentaCorriente (saldo:Real) : void
+  + getDescubierto () : Real
+  + setDescubierto (monto:Real) : void
+  # puedeExtraer (monto:Real) : boolean
+}
+
+
+class CajaDeAhorro {
+ - {static} DOS_POR_CIENTO : Real = 0.02 {readOnly}
+
+  + <<create>> CajaDeAhorro (saldo:Real) : void
+  - sumarPorcentajeAmonto (monto:Real) : Real
+  - restarPorcentajeAmonto (monto:Real) : Real
+  - montoMasPorcentaje (monto:Real) : boolean
+  # extrarSinControlar (monto:Real) : void
+  + depositar (monto:Real) : void
+  # puedeExtraer(monto:Real) : boolean
+}
+
+
+class CuentaCorriente extends Cuenta
+class CajaDeAhorro extends Cuenta
+
+
+@enduml     

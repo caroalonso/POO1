@@ -1,0 +1,33 @@
+@startuml
+class Empleado {
+ - nombre : String
+ 
+ + <<create>>Empleado(nombre:String) : void
+ + aportes() : Real
+ + montoBasico() : Real
+ + sueldoBasico() : Real
+ 
+}
+
+class EmpleadoJerarquico {
+
+  + <<create>>EmpleadoJerarquico(nombre:String) : void
+  + sueldoBasico() : Real
+  + montoBasico() : Real
+  + bonoPorCategoria() : Real
+  
+}
+
+class Gerente{
+
+ + +<<create>>Gerente(nombre:String) : void
+ + aportes() : Real
+ + montoBasico() : Real
+ 
+}
+
+ class EmpleadoJerarquico extends Empleado
+ class Gerente extends EmpleadoJerarquico
+
+
+@enduml

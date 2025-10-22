@@ -1,0 +1,102 @@
+@startuml
+
+
+class Socio {
+  - nombreCompleto : String
+  - fechaNacimiento : Date 
+  - fechaIngreso : Date
+
+  + <<create>> Socio (nombreCompleto:String , fechaNacimiento:Date) : void
+  + igualOmayor (valor:Integer) : boolean
+  + montoApagarPorFecha (fecha:Date) : Real
+  + agregarServicio (servicio:ServicioGym) : void 
+  
+}
+
+
+class Entrenador {
+  - nombreCompleto : String
+  - fechaNacimiento : Date 
+  - fechaIngreso : Date 
+  - honorarioManiana : Real
+  - honorariTarde : Real
+
+  + <<create>> Entrenador (nombreCompleto:String , fechaNacimiento:Date , honorarioManiana:Real , honorariTarde:Real) : void
+  + calcularDiferenciaEnAnios() : Long
+  + iniciaEnManiana (hora:Time) : boolean
+  + honorario (hora:Time) : Real
+}
+
+
+abstract ServicioGym <<abstract>> {
+  - fechaDeLaClase : Date
+  
+  + <<create>> ServicioGym (fechaDeLaClase:Date) : void
+  + esIgual (fecha:Date) : boolean
+  + esDomingo():boolean
+  + {abstract} <<abstract>> costoDeServicio() : Real
+}
+
+
+class Libre {
+  - cantidadHoras : Integer
+  - {static} PRECIO_POR_HORA : Real = 300 {readOnly}
+  - {static} DESCUENTO : Real = 0.10 {readOnly}
+  - {static} CANTIDAD_SERVICIOS : Integer = 5 {readOnly}
+  
+  + <<create>> Libre (fecha:Date, socio:Socio , cantidadHoras:Integer ) : void
+  - precioTotalPorCantidadDeHoras () : Real
+  + {abstract} <<abstract>> costoDeServicio () : Real
+}
+
+
+abstract ConEntrenador <<abstract>> {
+  - horaInicio : Time
+
+  + <<create>> ConEntrenador (fecha:Date, entrenador:Entrenador , horaInicio:Time) : void
+  + honorarioDeEntrenador () : Real
+  + adicionalDomingo() : Real
+  + adicionalAntiguedad() :Real
+  + {abstract} <<abstract>> valorDomingo () : Real
+  + {abstract} <<abstract>> valorAnio () : Real
+}
+
+
+class Personalizada {
+  - {static} DOMINGO : Real = 500 {readOnly}
+  - {static} ANIO : REAL = 400 {readOnly}
+
+  + <<create>> Personalizada (fecha:Date , entrenador:Entrenador , horaInicio:Time , socio:Socio) : void
+  + valorDomingo() : Real
+  + valorAnio() : Real
+  + costoDeServicio() : Real
+}
+
+
+class Grupal {
+  - {static} DOMINGO : Real = 800 {readOnly}
+  - {static} ANIO : REAL = 250 {readOnly}
+
+  + <<create>> Grupal (fecha:Date, entrenador:Entrenador , horaInicio:Time, socios:Socio[*]) : void
+  + agregarSocio (socio:Socio) : void
+  - honorarioDivididoPorSocios(): Real
+  - antiguedad() : Real
+  + valorDomingo() : Real
+  + valorAnio() : Real
+  + costoDeServicio() : Real
+}
+
+
+Socio --> ServicioGym : serviciosGym*
+ConEntrenador --> Entrenador :  1 entrenador
+Personalizada --> Socio :  1 socio
+Libre --> Socio :  1 socio
+Grupal --> Socio: socios*
+
+class Libre extends ServicioGym
+class ConEntrenador extends ServicioGym
+
+class Grupal extends ConEntrenador
+class Personalizada extends ConEntrenador
+
+@enduml

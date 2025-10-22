@@ -1,0 +1,17 @@
+@startuml
+
+class Farola {
+  - -estado:boolean
+  
+  + +<<create>>Farola():void
+  + +pairWithNeighbor(f:Farola):void
+  + +getNeighbors():Farola[*]
+  + +turnOn():void
+  + +turnOff():void
+  + +isOn():boolean
+
+}
+
+Farola--> Farola :0..* farolas
+
+@enduml

@@ -1,0 +1,10 @@
+class DateLapse {
+ - from : Date
+ - to : Date
+
+ + <<create>> DateLapse(from:Date,to:Date) : void
+ + getFrom() : Date
+ + getTo() : Date
+ + sizeInDays() : Long
+ + includesDate(other:Date) : boolean
+}

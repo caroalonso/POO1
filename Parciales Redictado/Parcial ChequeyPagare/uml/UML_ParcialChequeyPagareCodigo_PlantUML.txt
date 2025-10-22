@@ -1,0 +1,41 @@
+@startuml
+
+class Banco {
+
+  + <<create>> Banco () : void
+  + agregarCheque (cheque:Cheque ) : void
+  + agregrarPagare (pagare:Pagare) : void
+  + valorLiquido () : Real
+}
+
+abstract Cobro <<abstract>>{
+  - monto: Real
+  - destinatario : String
+  - originario : String
+  - fechaEmision : Date
+
+  + <<create>> Cobro (monto:Real,destinatario:String,originario:String,fechaEmision:Date) : void
+  + getMonto() : Real
+  + getFechaEmision() : Date
+  + estaVencido() : boolean
+  + <<abstract>> getFecha() : Date
+  + <<abstract>> dependeDelVencimiento() : boolean
+}
+
+class Cheque {
+  + <<create>> Cheque (monto:Real,destinatario:String,originario:String,fechaEmision:Date) : void
+  + getFecha() : Date
+  + dependeDelVencimiento() : boolean
+}
+
+class Pagare {
+  - fechaVencimiento : Date
+ 
+  + <<create>> Pagare (monto:Real,destinatario:String,originario:String,fechaEmision:Date,fechaVencimiento:Date) : void
+  + getFecha() : Date
+  + dependeDelVencimiento() : boolean
+}
+
+Banco --> Cobro: cobros*
+class Pagare extends Cobro
+class Cheque extends Cobro

@@ -1,0 +1,96 @@
+@startuml
+
+class Debate {
+
+  + <<create>> Debate () : void
+  + agregarUsuario (usuario:Usuario) : void
+}
+
+
+class Usuario {
+  - nombre : String
+  - contrasenia : Date 
+  - fecha : Date
+
+  + <<create>> Usuario (nombre:String , contrasenia:String) : void
+  + agregarSeguido (usuario:Usuario) : void
+  + crearPublicacion (titulo:String , contenido:String) : void
+  + setTipoFeed (tipoFeed:TipoDeFeed) : void 
+  + getSeguidos () : Usuario[*]
+  + getPublicaciones () : Publicacion[*]
+  + feed () : void
+}
+
+
+class Publicacion {
+  - titulo : String
+  - contenido : Date 
+  - fecha : Date
+  - like : Integer
+  - dislike: Integer
+
+  + <<create>> Publicacion (titulo:String , contenido:String) : void
+  + crearRespuesta(usuario:Usuario , contenido:String) : void
+  + registrarLike () : void
+  + registrarDislike () : void
+  + getFecha () : Date
+  + getLike () : Integer
+  + getDislike () : Integer
+}
+
+
+class Respuesta {
+  - contenido : String
+  - fecha : Date 
+
+  + <<create>> Respuesta (usuario:Usuario , contenido:String) : void
+}
+
+
+interface TipoDeFeed<<interface>>{
+ + obtenerFeed(usuario:Usuario) : Publicacion[*]
+}
+
+
+abstract Reaccion <<abstract>> {
+  + obtenerFeed (usuario:Usuario) : Publicacion[*]
+  + {abstract}  cantidadReacciones(publicacion:Publicacion) : Integer
+}
+
+
+class Social {
+
+  + <<create>> Social () : void
+  + obtenerFeed (usuario:Usuario) : Publicacion[*]
+}
+
+
+class Impopular {
+
+  + <<create>> Impopular () : void
+  + cantidadReacciones(publicacion:Publicacion) : Integer
+}
+
+
+class Popular {
+
+  + <<create>> Popular () : void
+  + cantidadReacciones(publicacion:Publicacion) : Integer
+}
+
+
+Debate --> Usuario: usuarios*
+Usuario --> Publicacion: publicaciones*
+Usuario --> Usuario: seguidos*
+Usuario --> Publicacion: publicacionesFeed*
+Publicacion --> Respuesta: respuestas*
+Respuesta --> Usuario: 1 usuario
+Usuario --> TipoDeFeed: 1 tipoDeFeed
+
+class Social implements TipoDeFeed
+class Reaccion implements TipoDeFeed
+
+class Popular extends Reaccion
+class Impopular extends Reaccion
+
+@enduml

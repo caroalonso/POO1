@@ -1,0 +1,48 @@
+@startuml
+interface Figura<<interface>>{
+ + getArea() : Real
+ + getPerimetro() : Real
+}
+
+
+class Circulo {
+  - radio : Real
+  - diametro : Real
+
+  + <<create>> Circulo() : void
+  + setRadio(radio:Real) : void 
+  + setDiametro(diametro:Real) : void
+  + getRadio() : Real
+  + getDiametro() : Real
+  + getArea() : Real
+  + getPerimetro() : Real
+}
+
+
+class Cuadrado {
+  - lado : Real
+
+  + <<create>> Cuadrado() : void
+  + setLado(unLado:Real) : void
+  + getLado() : Real
+  + getArea() : Real
+  + getPerimetro() : Real
+}
+
+class Cuerpo3D {
+  - carabasal : Figura
+  - altura : Real
+
+  + <<create>> Cuerpo3D() : void
+  + setCaraBasal(carabasal:Figura) : void
+  + setAltura(altura:Real) : void 
+  + getAltura() : Real
+  + getVolumen() : Real
+  + getSuperficieExterior() : Real
+}
+
+class Circulo implements Figura
+class Cuadrado implements Figura
+Cuerpo3D --> Figura :1 figura
+
+@enduml

@@ -1,0 +1,50 @@
+@startuml
+
+class ClienteDeCorreo {
+  - inbox : Carpeta 
+ 
+  + <<create>> ClienteDeCorreo() : void
+  + agregarCarpeta(carpeta:Carpeta) : void
+  + recibir(email:Email) : void
+  + buscar(texto:String) : Email
+  - buscarTextoEnCarpetas(texto:String) : Email
+  + espacioOcupado() : Integer
+}
+
+class Carpeta {
+  - nombreCarpeta : String
+
+  + <<create>> Carpeta(nombreCarpeta:String) : void
+  + agregarEmail(email:Email) : void
+  + mover(email:Email,destino:Carpeta) : void
+  + buscar(nombre:String) : Email
+  + espacioOcupado() : Integer
+  + getNombre() : String
+}
+
+class Email {
+  - tituloEmail : String
+  - cuerpoEmail : String
+
+  + <<create>> Email (titulo:String,cuerpo:String) : void
+  + agregarArchivo(archivo:Archivo) : void
+  + getTitulo() : String
+  + getCuerpo() : String
+  + getAdjuntos() : Archivo[*]
+  + contienetexto(texto:String) : boolean
+  + +espacioAdjuntos() : Integer
+  + +espacioOcupado() : Integer
+}
+
+
+class Archivo {
+  - nombre:String
+  
+  + <<create>> Archivo(nombre:String) : void
+  + tamanio() : Integer
+}
+
+
+ClienteDeCorreo --> Carpeta : carpetas *
+Carpeta --> Email :emails *
+Email --> Archivo : adjuntos *

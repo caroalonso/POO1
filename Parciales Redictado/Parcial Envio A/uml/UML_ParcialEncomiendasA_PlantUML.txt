@@ -1,0 +1,96 @@
+@startuml
+
+class Empresa {
+
+  + <<create>> Empresa () : void
+  + agregarEncomienda (paquete:Paquete) : void
+  + agregarCamion (camion:Camion)
+  
+}
+
+
+class Camion {
+
+  - peso : double
+  - volumen : double
+
+  + <<create>> Camion (peso:double , volumen:double) : void
+  + cargarCamion (paquetes:Paquete[*]) : Paquete[*]
+
+}
+
+
+class Producto {
+
+  - peso : double
+  - volumen : double
+
+  + <<create>> Producto (peso:double , volumen:double) : void
+  + peso () : double
+  + volumen () : double
+  
+}
+
+
+abstract Paquete <<abstract>> {
+
+  + <<create>> Paquete (fechaDescpacho:Date, destino:String , productos:Productos[*]) : void
+  + fechaDespacho() : Date
+  - pesoDelPaquete() : double
+  - volumenDelPaquete() : double
+  + validarPaquete() : double
+  + {abstract} <<abstract>> pesoPaquete() : Real
+  + {abstract} <<abstract>> volumenPaquete() : Real
+
+}
+
+
+class Min {
+
+  - {static} PESO : Real = 1200 {readOnly}
+  - {static} VOLUMEN : Real = 1300 {readOnly}
+  - {static} PRECIO : Real = 750 {readOnly}
+
+  + <<create>> Min ( fechaDescpacho:Date, destino:String, productos:Producto[*]) : void
+  + pesoPaquete () : Real
+  + volumenPaquete () : Real
+
+}
+
+
+class Normal {
+
+  - {static} PESO : Real = 5000  {readOnly}
+  - {static} VOLUMEN : Real = 10000 {readOnly}
+  - {static} PRECIO : Real = 1800 {readOnly}
+
+  + <<create>> Normal ( fechaDescpacho:Date, destino:String, productos:Producto[*]) : void
+  + pesoPaquete () : Real
+  + volumenPaquete () : Real
+
+}
+
+
+class Max {
+
+  - {static} PESO : Real = 15000 {readOnly}
+  - {static} VOLUMEN : Real = 25000 {readOnly}
+
+  + <<create>> Max ( fechaDescpacho:Date, destino:String, productos:Producto[*]) : void
+  + pesoPaquete () : Real
+  + volumenPaquete () : Real
+
+}
+
+
+Empresa --> Paquete: paquetes*
+Empresa --> Camion: camiones*
+Camion --> Paquete: encomiendas*
+Paquete --> Producto: productos*
+
+
+class Min extends Paquete
+class Normal extends Paquete
+class Max extends Paquete
+
+@enduml

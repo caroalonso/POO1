@@ -1,0 +1,52 @@
+@startuml
+class Balanza {
+  - cantidadDeProductos : Integer
+  - precioTotal : Real 
+  - pesoTotal : Real
+
+  + <<create>> Balanza() : void
+  + ponerEnCero() : void
+  + agregarProducto(p:Producto) : void 
+  + emitirTicket() : Ticket
+  + getCantidadDeProductos() : Integer
+  + getPrecioTotal() : void
+  + getPesoTotal() : void
+  }
+
+class Producto {
+  - peso : Real
+  - precioPorKilo : Real
+  - descripcion : String
+
+  + +<<create>> Producto() : void
+  + getPrecio() : Real
+  + setPrecio(peso:Real) : void
+  + setPrecioPorKilo(precioPorKilo:Real) : void
+  + setDescripcion(descripcion:String) : void
+  + getPeso() : Real
+  + getPrecioPorKilo() : Real
+  + getDescripcion() : String
+  + toString() : String
+  
+}
+
+class Ticket {
+  - fecha : Date 
+  - cantidadDeProductos : Integer
+  - pesoTotal : Real
+  - precioTotal : Real
+//- impuestoTotal :Real
+
+  + +<<create>> Ticket(cantidadDeProductos:Integer, pesoTotal:Real,
+  precioTotal:Real, // impustoTotal:Real) : void
+  + getFecha() : Date
+  + getCantidadDeProductos() : Integer
+  + getPesoTotal(): Real
+  + getPrecioTotal() : Real
+  + impuesto() : Real
+  + toString() : String
+  
+}
+
+
+@enduml

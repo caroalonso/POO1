@@ -1,0 +1,81 @@
+@startuml
+
+
+class Contribuyente{
+
+  + <<create>> Contribuyente () : void
+  + calcularTotalDeImpuestosApagar () : Real
+}
+
+
+abstract Bien  <<abstract>> {
+  - valor : Real
+  - fechaAdquisicion : Date
+  - {static} CERO : Real = 0 {readOnly}
+  
+  + <<create>> Bien (valor:Real) : void
+  +  calcularImpuesto() () : Real
+  +  getValor (): Real
+  +  getCero () : Real
+  + {abstract} <<abstract>> impuesto () : Real
+  + {abstract} <<abstract>> descuento () : Real
+}
+
+
+abstract Vehiculo <<abstract>>{
+ - {static} DESCUENTO : Real = 0.30 {readOnly}
+ - caracteristicasEcologicas: boolean
+  
+ + <<create>> Vehiculo (valor:Real , caracteristicasEcologicas:boolean) : void
+ + descuento() : Real
+
+}
+
+class Embarcacion {
+  - valorMercado : Real
+  - {static} QUINCE_POR_CIENTO : Real = 0.15 {readOnly}
+  - {static} DIEZ_POR_CIENTO : Real = 0.10 {readOnly}
+  - {static} MILLON : Real = = 1000000.0 {readOnly}
+
+  + <<create>> Embarcacion (valor:Real , valorMercado:Real , caracteristicasEcologicas:boolean) : void
+  - menorAmillon() : boolean
+  + impuesto() : Real
+
+}
+
+class Automovil { 
+  - antiguedad : Integer
+  - {static} CINCO_POR_CIENTO : Real = 0.05 {readOnly}
+  - {static} DIEZ : Integer = 10 {readOnly}
+  
+  + <<create>> Automovil (valor:Real , caracteristicasEcologicas:boolean, antiguedad:Integer) : void
+  - menorAdiez () : boolean
+  + impuesto () : Real
+
+}
+
+class Inmueble {
+  - antiguedad : Integer 
+  - edificacion: boolean
+  - {static} QUINIENTOS_MIL : Real = 500.000 {readOnly}
+  - {static} UNO_POR_CIENTO : Real = 0.01 {readOnly}
+  - {static} DOS_POR_CIENTO : Real = 0.02 {readOnly}
+  - {static} DESCUENTO : Real = 0.20 {readOnly}
+  - {static} ANIOS : Integer = 5 {readOnly}
+
+  + <<create>> Inmueble (valor:Real, antiguedad:Integer, edificacion:boolean) : void
+  - aplicaParaDescuento () : boolean
+  + impuesto () : Real
+  + descuento () : Real
+
+}
+
+
+Contribuyente --> Bien : bienes*
+
+class Vehiculo extends Bien
+class Embarcacion extends Vehiculo
+class Automovil extends Vehiculo
+class Inmueble extends Bien
+
+@enduml
