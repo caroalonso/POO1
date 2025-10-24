@@ -1,0 +1,64 @@
+@startuml
+
+class DateLapse {
+  - from : Date
+  - to : Date
+  
+  + <<create>> DateLapse(from:Date,to:Date) : void
+  + getTo() : Date 
+  + getFrom() : Date
+  + sizeInDays() : Long
+  + includesDate(other:Date) : boolean
+  + overlaps(anotherDateLapse : DateLapse) : boolean
+  + puedeCancelar() : boolean
+  + puedeCrear() : boolean
+  + equals(obj:Object) : boolean <<overide>>
+}
+
+
+class Usuario {
+  - nombre : String
+  - direccion : String
+  - dni : String
+  - {static} SETENTA_Y_CINCO_POR_CIENTO : real = 0.75 {readOnly}
+  
+  + <<create>> Usuario(nombre:String ,dni:String) : void
+  + agregarInmueble(inmueble:Inmueble) : void 
+  + eliminarInmueble(inmueble:Inmueble) : void 
+  + agregarReserva(reserva:Reserva) : void
+  + cancelarReserva(reserva:Reserva) : void
+  + retribucionPropietario(periodoDado:DateLapse) : Real
+}
+
+
+class Inmueble {
+  - nombre : String
+  - direccion :String
+  - precioNoche : Real
+  
+  + <<create>> Inmueble(nombre:String,direccion:String,precio:Real) : void
+  + crearReserva(periodoDado:DateLapse,usuario:Usuario) : void 
+  + cancelarReserva(reserva:Reserva,usuario:Usuario) : void
+  + consultarDisponibilidad(periodoDado:DateLapse) : boolean
+  + retribucionDePropiertario(periodoDado:DateLapse) : Real
+  + equals(obj: Object): boolean «override»
+}
+
+
+class Reserva {
+  
+  + <<create>> Reserva(dateLapse:DateLapse) : void 
+  + dentroDePeriodo(periodoDado:DateLapse) : boolean
+  + precioReserva(precioNoche:real) : real
+  + enCurso() : boolean
+  + puedeCancelar() : boolean
+  + puedeCrear() : boolean
+  + equals(obj: Object): boolean «override»
+}
+
+
+Usuario --> Inmueble : inmuebles *
+Usuario --> Reserva : reservas *
+Inmueble --> Reserva : reservas *
+Reserva --> DateLapse : datelapse 1
+Reserva --> Inmueble : inmueble 1
