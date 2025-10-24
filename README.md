@@ -20,6 +20,7 @@
 - 💻 [Cliente De Correo](https://github.com/caroalonso/POO1/tree/main/Ejercicios%20Cuadernillo/15%20Cliente%20De%20Correo)
 - 💻 [Intervalo De Tiempo](https://github.com/caroalonso/POO1/tree/main/Ejercicios%20Cuadernillo/16%20Intervalo%20De%20Tiempo)
 - 💻 [Intervalo De Tiempo (otra vez)](https://github.com/caroalonso/POO1/tree/main/Ejercicios%20Cuadernillo/17%20Intervalo%20De%20Tiempo%20(otra%20vez))
+- 💻 [Alquiler De propiedades](https://github.com/caroalonso/POO1/tree/main/Ejercicios%20Cuadernillo/19%20%20Alquiler%20de%20propiedades)
 
 
 ### 📄 [Ejercicios De Redictado:]() 
