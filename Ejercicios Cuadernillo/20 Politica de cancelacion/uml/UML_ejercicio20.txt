@@ -1,0 +1,96 @@
+class DateLapse {
+  - from : Date
+  - to : Date
+  
+  + <<create>> DateLapse(from:Date,to:Date) : void
+  + getTo() : Date 
+  + getFrom() : Date
+  + sizeInDays() : Long
+  + includesDate(other:Date) : boolean
+  + overlaps(anotherDateLapse : DateLapse) : boolean
+  + puedeCancelar() : boolean
+  + estaDentroDeLosUltimosXDiasAntesDelInicio(dias:integer) : boolean
+  + equals(obj:Object) : boolean <<override>>
+}
+
+
+class Usuario {
+  - nombre : String
+  - direccion : String
+  - dni : String
+  - {static} SETENTA_Y_CINCO_POR_CIENTO : real = 0.75 {readOnly}
+  
+  + <<create>> Usuario(nombre:String ,dni:String) : void
+  + agregarInmueble(inmueble:Inmueble) : void 
+  + eliminarInmueble(inmueble:Inmueble) : void 
+  + agregarReserva(reserva:Reserva) : void
+  + cancelarReserva(reserva:Reserva) : void
+  + retribucionPropietario(periodoDado:DateLapse) : Real
+}
+
+
+class Inmueble {
+  - nombre : String
+  - direccion :String
+  - precioNoche : Real
+  
+  + <<create>> Inmueble(nombre:String,direccion:String,precio:Real,politicaDeCancelacion:PoliticaDeCancelacion) : void
+  + setPoliticaCancelacion(politicaCancelacion:PoliticaCancelacion) : void
+  + crearReserva(periodoDado:DateLapse,usuario:Usuario) : void 
+  + cancelarReserva(reserva:Reserva,usuario:Usuario) : double
+  + consultarDisponibilidad(periodoDado:DateLapse) : boolean
+  + retribucionDePropiertario(periodoDado:DateLapse) : Real
+  + equals(obj: Object): boolean «override»
+}
+
+
+class Reserva {
+  
+  + <<create>> Reserva(dateLapse:DateLapse,inmueble:Inmuble) : void 
+  + dentroDePeriodo(periodoDado:DateLapse) : boolean
+  + precioReserva(precioNoche:real) : real
+  + enCurso() : boolean
+  + puedeCrear() : boolean
+  + puedeCancelar() : boolean
+  + timosXDiasAntesDelInicio(dias:integer) : boolean
+  + equals(obj: Object): boolean «override»
+}
+
+
+interface PoliticaDeCancelacion <<interface>> {
+  + reembolso (reserva:Reserva,double:precioNoche) : real
+}
+
+
+class Flexible {
+
+  + <<create>> Flexible() : void
+  + reembolso(reserva:Reserva,precioNoche:Real) : Real
+}
+
+
+class Moderada {
+  - {static} SIETE:integer = 7 {readOnly}
+  - {static} DOS:integer = 2 {readOnly}
+  - {static} CINCUENTA_POR_CIENTO :real = 0.50 {readOnly}
+
+  + <<create>> Moderada() : void
+  + reembolso(reserva:Reserva,precioNoche:Real) : Real
+}
+
+
+class Estricta {
+
+  + <<create>> Estricta () : void
+  + reembolso(reserva:Reserva,precioNoche:Real) : Real
+}
+
+Usuario --> Inmueble : inmuebles *
+Usuario --> Reserva : reservas *
+Inmueble --> Reserva : reservas *
+Reserva --> Inmueble : 1 inmueble
+Inmueble --> PoliticaDeCancelacion : politicaDeCancelacion 1
+Reserva --> DateLapse : datelapse 1
+class Estricta implements PoliticaDeCancelacion
+class Moderada implements PoliticaDeCancelacion
+class Flexible implements PoliticaDeCancelacion
