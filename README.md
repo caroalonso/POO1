@@ -22,6 +22,7 @@
 - 💻 [Intervalo De Tiempo (otra vez)](https://github.com/caroalonso/POO1/tree/main/Ejercicios%20Cuadernillo/17%20Intervalo%20De%20Tiempo%20(otra%20vez))
 - 💻 [Alquiler De propiedades](https://github.com/caroalonso/POO1/tree/main/Ejercicios%20Cuadernillo/19%20%20Alquiler%20de%20propiedades)
 - 💻 [Politica De Cancelacion](https://github.com/caroalonso/POO1/tree/main/Ejercicios%20Cuadernillo/20%20Politica%20de%20cancelacion)
+- 💻 [Method Lookup](https://github.com/caroalonso/POO1/tree/main/Ejercicios%20Cuadernillo/27%20Method%20Lookup)
 
 
 ### 📄 [Ejercicios De Redictado:]() 
