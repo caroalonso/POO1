@@ -10,7 +10,6 @@ class CuadroTarifario {
 
 
 class Factura {
-  - usuario : Usuario
   - fechaEmicion : Date
   - bonificacion : Real
   - montoTotal : Real
@@ -42,4 +41,5 @@ class ConsumoEnergetico {
 }
 
 Usuario --> ConsumoEnergetico : consumosDeEnergia*
+Factura --> Usuario : 1 usuario
 @enduml
