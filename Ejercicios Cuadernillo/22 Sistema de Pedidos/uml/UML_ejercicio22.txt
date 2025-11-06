@@ -1,0 +1,98 @@
+@startuml
+
+class Articulo {
+  - nombre : String
+  - precio : Real
+  - categoria : String
+  - peso : Real
+  - stock : Integer
+  - {static}TREINTICINCO:Integer= 35 {readOnly}
+  
+  + <<create>> Articulo(nombre:String,precio:Real,categoria:String,peso:Real,stock:Integer) : void
+  + getPrecio() : Real
+  + getPeso() : Real
+  + cumpleConPeso() : boolean
+}
+
+
+class Vianda {
+  - nombre : String
+  - precio : Real
+  - boolean aptoCeliaco : boolean
+  - boolean disponibilidad : boolean
+  
+  + <<create>> Vianda(nombre:String,precio:Real,aptoCeliaco:boolean,disponibilidad:boolean) : void
+  + getPrecio() : Real 
+  + getAptoCeliaco(inmueble:Inmueble) : boolean
+}
+
+
+abstract Pedido <<abstract>> {
+  - email : String
+  - fechaHoraPedido : DateTime
+  
+  + <<create>> Pedido(email:String,entrega:Entrega) : void
+  + tiempoEstimadoEntrega () : integer
+}
+
+
+class PedidosSupermercado {
+  - cupon : boolean
+  - {static}UNO:Integer= 1 {readOnly}
+  - {static}DESCUENTO:Real= 0.10 {readOnly}
+  
+  + <<create>> PedidoSupermercado(email:String,entrega:Entrega,productos:Articulos[*],cupon:boolean) : void 
+  + agregarArticulo(articulo:Articulo) : void
+  + costoPedidos() : Real
+  + pesoPedidos() : Real
+}
+
+
+
+class PedidosViandas {
+  - celiaco : boolean
+  - {static}CUARENTA:Integer= 40 {readOnly}
+
+  + <<create>> PedidosViandas(email:String,entrega:Entrega,viandas:Viandas[*],celiaco:boolean ) : void
+  - tiempoEstimado(tiempo:Integer) : boolean
+  + agregarVianda(vianda:Vianda) : void
+  + costoPedido () : Real
+}
+
+
+abstract Entrega <<abstract>> {
+  - fechaHora : DateTime
+
+  + <<create>> Entrega (fechaHora:DateTime) : void
+  + getFechaHora() : DateTime
+  + <<abstract>> calcularEntrega(fechaHoraPedido:DateTime) : Integer
+}
+
+
+class Delivery {
+  - direccion : String
+
+  + <<create>> Delivery(direccion:String,horafechaDelivery;DateTime) : void
+  + calcularEntrega(fechaHoraPedido:DateTime) : Integer
+}
+
+
+class RetiroSucursal {
+  - dni : String
+
+  + <<create>> RetiroSucursal(dni:String ,fechaHoraRetiro:DateTime) : void
+  + calcularEntrega(fechaHoraPedido:DateTime) : Integer
+}
+
+
+class PedidosSupermercado extends Pedido
+class PedidosViandas extends Pedido
+
+class Delivery extends Entrega
+class RetiroSucursal extends Entrega
+
+PedidosSupermercado --> Articulo : articulos *
+PedidosViandas --> Vianda : viandas *
+Pedido --> Entrega : 1 entrega
+
+@enduml
