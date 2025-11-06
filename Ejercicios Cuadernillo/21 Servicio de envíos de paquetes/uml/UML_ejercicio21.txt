@@ -1,0 +1,132 @@
+@startuml
+
+class DateLapse {
+  - from : Date
+  - to : Date
+  
+  + <<create>> DateLapse(from:Date,to:Date) : void
+  + getTo() : Date 
+  + getFrom() : Date
+  + sizeInDays() : Long
+  + includesDate(other:Date) : boolean
+  + overlaps(anotherDateLapse : DateLapse) : boolean
+}
+
+
+abstract Cliente <<abstract>> {
+  - nombre : String
+  - direccion :String
+  - nroIdentificador : Integer
+  
+  + <<create>> Cliente(nombre:String,direccion:String,nroIdentificador:Integer) : void
+  + agregarEnvio(envio:Envio) : void
+  + montoApagarDentroDeUnPeriodo(dateLapse:DateLapse) : Real
+}
+
+
+class PersonaFisica {
+  - {static} DESCUENTO: real = 0.10 {readOnly}
+  
+  + <<create>> PersonaFisica(nombre:String ,direccion:String,dni:integer) : void
+  + montoApagarDentroDeUnPeriodo(dateLapse:DateLapse) : Real
+}
+
+
+class Corporativo {
+  + <<create>> Corporativo(nombre:String ,direccion:String,cuit:integer) : void
+  + montoApagarDentroDeUnPeriodo(dateLapse:DateLapse) : Real
+}
+
+
+abstract Envio <<abstract>> {
+ - fechaDespacho : Date
+ - direccionOrigen : String
+ - direccionDestino : String
+ - peso : Real
+
+ + <<create>> Envio (direccionOrigen:String,direccionDestino:String,peso:Real,fechaDespacho:Date,entrega:Entrega) : void
+ + dentroDePeriodo(dateLapse:DateLapse) : boolean
+ + getPeso() : Real
+ + getEntrega():Entrega
+ + <<abstract>> costo () : Real
+ + <<abstract>> precioEstandar() : Real
+ + <<abstract>> precioRapido() : Real
+}
+
+
+class Local {
+  - {static} PRECIOESTANDAR: real = 1000 {readOnly}
+  - {static} PRECIORADIPO: real = 500 {readOnly}
+     
+  + <<create>> Local(direccionOrigen:String,direccionDestino:String,peso:Real,fechaDespacho:Date,entrega:Entrega) : void 
+  + precioEstandar() : Real
+  + precioRapido():Real
+  + costo():Real
+}
+
+
+class Internacional {
+  - {static} CINCO_MIL:double = 5000 {readOnly}
+  - {static} DIEZ:double = 10 {readOnly}
+  - {static} DOCE:double = 12 {readOnly}
+  - {static} PRECIOESTANDAR :real = 0 {readOnly}
+  - {static} PRECIORADIPO :real = 800 {readOnly}
+  - {static} UNKILO :real = 1000 {readOnly}
+
+  + <<create>> Internacional(direccionOrigen:String,direccionDestino:String,peso:Real,fechaDespacho:Date,entrega:Entrega) : void
+  + precioEstandar() : Real
+  + precioRapido() : Real
+  + precioSegunPeso() : Real
+  + costo() : Real
+}
+
+
+class Interurbano {
+  - {static} VEINTE:double = 20 {readOnly}
+  - {static} VEINTICINCO:double = 25 {readOnly}
+  - {static} TREINTA:double = 30 {readOnly}
+  - {static} CIEN:real = 100 {readOnly}
+  - {static} QUINIENTOS:real = 500 {readOnly}
+  - distanciakm : Real
+  - {static} PRECIOESTANTAR :real = 0 {readOnly}
+  - {static} PRECIORAPIDO :real = 0 {readOnly}
+
+  + <<create>> Interurbano(direccionOrigen:String,direccionDestino:String,peso:Real,fechaDespacho:Date,distanciaKM:Real) : void
+  - distancia(): Real
+  + costo () : Real
+  + precioEstandar() : Real
+  + precioRapido() : Real
+}
+
+
+interface Entrega <<interface>> {
+  + adicional(envio:Envio) : Real
+}
+
+
+class Rapida {
+  + <<create>> Rapido() : void
+  + adicional(envio:Envio) : Real
+}
+
+
+class Estandar {
+  + <<create>> Estandar() : void
+  + adicional(envio:Envio) : Real
+}
+
+
+Cliente --> Envio : envios *
+Cliente --> Entrega : 1 entrega
+
+class PersonaFisica extends Cliente
+class Corporativo extends Cliente
+
+class Local extends Envio
+class Internacional extends Envio
+class Interurbano extends Envio
+
+class Rapida implements Entrega
+class Estandar implements Entrega
+
+@enduml
