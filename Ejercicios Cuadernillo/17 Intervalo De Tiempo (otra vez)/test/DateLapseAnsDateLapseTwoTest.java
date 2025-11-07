@@ -52,6 +52,7 @@ public class DateLapseAnsDateLapseTwoTest {
         assertTrue(dateLapse.includesDate(LocalDate.of(2025,8,1)));
         assertTrue(dateLapse.includesDate(LocalDate.of(2025,8,10)));
         assertTrue(dateLapse.includesDate(LocalDate.of(2025,8,2)));
+        assertTrue(dateLapse.includesDate(LocalDate.of(2025,8,9)));
         assertFalse(dateLapse.includesDate(LocalDate.of(2025,8,11)));
         assertFalse(dateLapse.includesDate(LocalDate.of(2025,7,31)));
 
@@ -59,6 +60,7 @@ public class DateLapseAnsDateLapseTwoTest {
         assertTrue(dateLapseTwo.includesDate(LocalDate.of(2025, 8, 1)));
         assertTrue(dateLapseTwo.includesDate(LocalDate.of(2025, 8, 11)));
         assertTrue(dateLapseTwo.includesDate(LocalDate.of(2025, 8, 2)));
+        assertTrue(dateLapseTwo.includesDate(LocalDate.of(2025, 8, 9)));
         assertFalse(dateLapseTwo.includesDate(LocalDate.of(2025, 8, 12)));
         assertFalse(dateLapseTwo.includesDate(LocalDate.of(2025, 7, 31)));
     }

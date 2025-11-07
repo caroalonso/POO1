@@ -39,6 +39,7 @@ class DateLapseTest {
         assertTrue(dateLapse.includesDate(LocalDate.of(2025,8,1)));
         assertTrue(dateLapse.includesDate(LocalDate.of(2025,8,10)));
         assertTrue(dateLapse.includesDate(LocalDate.of(2025,8,2)));
+        assertTrue(dateLapse.includesDate(LocalDate.of(2025,8,9)));
         assertFalse(dateLapse.includesDate(LocalDate.of(2025,8,11)));
         assertFalse(dateLapse.includesDate(LocalDate.of(2025,7,31)));
     }

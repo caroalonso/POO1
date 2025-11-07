@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DateLapseTest {
-    private DateLapse dataLapse;
+    private DateLapse dateLapse;
     private LocalDate from;
     private LocalDate to;
 
@@ -17,41 +17,28 @@ class DateLapseTest {
     }
 
     @Test
-    void testDataLapse() {
-        dataLapse= new DateLapse(from,to);
-        assertEquals(from,dataLapse.getFrom());
-        assertEquals(to,dataLapse.getTo());
-    }
-
-    @Test
-    void testGetFrom() {
-        dataLapse= new DateLapse(from,to);
-        assertEquals(from,dataLapse.getFrom());
-        assertNotEquals(to,dataLapse.getFrom());
-    }
-
-    @Test
-    void testGetTo() {
-        dataLapse= new DateLapse(from,to);
-        assertEquals(to,dataLapse.getTo());
-        assertNotEquals(from,dataLapse.getTo());
+    void testDataLapseGetters() {
+        dateLapse= new DateLapse(from,to);
+        assertEquals(from,dateLapse.getFrom());
+        assertEquals(to,dateLapse.getTo());
     }
 
     @Test
     void testSizeInDays() {
-        dataLapse= new DateLapse(LocalDate.now(),LocalDate.now());
-        assertEquals(0,dataLapse.sizeInDays());
-        dataLapse = new DateLapse(from,to);
-        assertEquals(9,dataLapse.sizeInDays());
+        dateLapse= new DateLapse(LocalDate.now(),LocalDate.now());
+        assertEquals(0,dateLapse.sizeInDays());
+        dateLapse = new DateLapse(from,to);
+        assertEquals(9,dateLapse.sizeInDays());
     }
 
     @Test
     void testIncludesDate() {
-        dataLapse= new DateLapse(from,to);
-        assertTrue(dataLapse.includesDate(LocalDate.of(2025,8,1)));
-        assertTrue(dataLapse.includesDate(LocalDate.of(2025,8,10)));
-        assertTrue(dataLapse.includesDate(LocalDate.of(2025,8,2)));
-        assertFalse(dataLapse.includesDate(LocalDate.of(2025,8,11)));
-        assertFalse(dataLapse.includesDate(LocalDate.of(2025,7,31)));;
+        dateLapse= new DateLapse(from,to);
+        assertTrue(dateLapse.includesDate(LocalDate.of(2025,8,1)));
+        assertTrue(dateLapse.includesDate(LocalDate.of(2025,8,10)));
+        assertTrue(dateLapse.includesDate(LocalDate.of(2025,8,2)));
+        assertTrue(dateLapse.includesDate(LocalDate.of(2025,8,9)));
+        assertFalse(dateLapse.includesDate(LocalDate.of(2025,8,11)));
+        assertFalse(dateLapse.includesDate(LocalDate.of(2025,7,31)));
     }
 }
