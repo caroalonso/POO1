@@ -1,4 +1,4 @@
-package ejercicio20;
+package ejercicio19;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -42,26 +42,23 @@ public class DateLapse {
     }
 
 
+    // se puede cancelar si hoy es antes del inicio de la reserva
     public boolean puedeCancelar() {
         return LocalDate.now().isBefore(this.getFrom());
     }
 
+    // se puede crear si la fecha de inicio es después de hoy
     public boolean puedeCrear() {
         return this.getFrom().isAfter(LocalDate.now());
-    }
-
-    public boolean estaDentroDeLosUltimosXDiasAntesDelInicio(int dias) {
-        return LocalDate.now().isBefore(this.getFrom())  // la fecha de cancelacion (hoy) es anterior a la fecha de inicio de reserva
-                && !LocalDate.now().isBefore(this.getFrom().minusDays(dias)); // y la fecha de inicio reserva menos x cantidad de dias , no es anterior a la fecha de cancelacion (hoy).
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof DateLapse)) return false;
+        if (!(obj instanceof DateLapse))
+            return false;
         DateLapse other = (DateLapse) obj;
-        return Objects.equals(this.from, other.from) && Objects.equals(this.to, other.to);
+        return Objects.equals(this.getFrom(), other.getFrom()) && Objects.equals(this.getTo(), other.getTo());
     }
-
 
 }

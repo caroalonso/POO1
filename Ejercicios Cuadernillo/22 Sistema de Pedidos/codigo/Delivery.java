@@ -11,7 +11,7 @@ public class Delivery extends Entrega {
         this.direccion = direccion;
     }
 
-    /// ??????????????????
+    /// no se implementa codigo.
     @Override
     public int calcularEntrega(LocalDateTime fechaHoraPedido) {
         return 0;
