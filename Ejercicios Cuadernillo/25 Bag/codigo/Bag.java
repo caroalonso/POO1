@@ -1,22 +1,84 @@
 package ejercicio25;
 
-import java.util.Collection;
-public interface Bag<T> extends Collection<T> {
+import java.util.AbstractCollection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-    // agrega clave a Bag, incrementando en 1 su "contador".
+public class Bag<T> extends AbstractCollection<T> implements BagInterface<T> {
+
+    private Map <T,Integer> bag;
+
+    public Bag() {
+        this.bag = new HashMap<>();
+    }
+
+    // agrega clave nueva e incrementa en 1 "contador" de la clave.
     @Override
-    boolean add(T key);
+    public boolean add(T key) {
+        bag.put (key,bag.getOrDefault(key, 0) + 1);
+        return true;
+    }
 
     // retorna "contador" de clave. Sí no existe la clave retorna 0.
-    int occurrencesOf(T key);
-
-    // resta 1 al "contador" de la clave. Si no existe la clave no hace nada.
-    void removeOccurrence(T key);
-
-    // elimina clave-valor de Bag. Sí no existe la clave no hace nada.
-    void removeAll(T key);
-
-    // Devuelve el número total de elementos en el Bag, es decir, la suma de todas las cardinalidades de todos sus elementos.
     @Override
-    int size();
+    public int occurrencesOf(T key) {
+        return bag.getOrDefault(key, 0);
+    }
+
+    // resta en 1 el "contador" si existe la clave.
+    @Override
+    public void removeOccurrence(T key) {
+
+        if (bag.containsKey(key)) { // si existe clave
+            int current = bag.get(key); // guardo el "valor contador" de la clave
+            if (current > 1) // si el valor mayor a 1
+                bag.put(key, current - 1); // resto 1 al "valor cntador"
+            else
+                bag.remove(key); // si es 1 elimino clave y valor de map.
+        }
+    }
+
+    // elimina clave-valor de bag.
+    @Override
+    public void removeAll(T key) {
+        bag.remove(key);
+    }
+
+    // suma todo los "contadores" de las claves.
+    @Override
+    public int size() {
+      return   bag.values().stream()
+              .mapToInt(i -> i.intValue())
+              .sum();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private Iterator<Map.Entry<T, Integer>> entryIterator = bag.entrySet().iterator();
+            private Map.Entry<T, Integer> currentEntry;
+            private int remainingCount;
+
+            @Override
+            public boolean hasNext() {
+                return remainingCount > 0 || entryIterator.hasNext();
+            }
+
+            @Override
+            public T next() {
+                if (remainingCount == 0) {
+                    currentEntry = entryIterator.next();
+                    remainingCount = currentEntry.getValue();
+                }
+                remainingCount--;
+                return currentEntry.getKey();
+            }
+
+            @Override
+            public void remove() {
+                removeOccurrence(currentEntry.getKey());
+            }
+        };
+    }
 }
