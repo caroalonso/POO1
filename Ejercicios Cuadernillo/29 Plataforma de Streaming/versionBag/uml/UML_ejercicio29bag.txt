@@ -1,0 +1,183 @@
+@startuml
+
+abstract Cliente <<abstract>> {
+  - nombre:String
+  - fechaAlta : Date
+  - {static} DIEZ:Integer = 10 {readOnly}
+  - {static} CERO:Integer = 0 {readOnly}
+
+  + <<create>> Cliente(nombre:String,plan:Plan) : void
+  + cambioDePlan(plan:Plan) : void
+  + agregarActividad(cctividad:Actividad) : void
+  - mayorA(valor:Integer) : boolean
+  - cantidadDeIpsUtilizadas() : Integer
+  + penalizacion() :Real
+  + montoAcobrarCliente(dateLapse:DateLapse) : Real
+}
+
+abstract Actividad <<abstract>> {
+  - fechaInicio : Date
+  - ipUsada : String
+  - duracion : Integer
+
+  + <<create>> Actividad(ipUsada:String,duracion:Integer) : void
+  + getFecha() : Date
+  + getIpUsada() : String
+  + getDuracion() : Integer
+  + <<abstract>> montoPorActividad() : Real
+}
+
+class ReproduccionVideos {
+  - duracionPublicidad : Integer
+  - {static} DIEZ:Integer = 10 {readOnly}
+
+  + <<create>> ReproducionVideos(ip:String,duracionTotal:Integer,duracionPublicidad:Integer):void
+  + montoPorActividad() : Real
+}
+
+
+class SesionJuegos{
+  - {static} TRECIENTOS:Integer = 300 {readOnly}
+  - {static} CERO:Integer = 0 {readOnly}
+
+  + <<create>> SesionJuegos(ip:String, duracion:Integer):void
+  + agregarItem(item:Item) : void
+  - costoDeItems() : Real
+  + montoPorActividad() : Real
+}
+
+Class Item {
+ - nombre : String
+ - cantidad : Integer
+ - precioUnidad : Real
+ 
+ + <<create>> Item (nombre:String ,cantidad:Integer,precioUnidad:Real) : void
+ + costo() : Real
+}
+
+abstract Plan <<abstract>> {
+  - ip : Integer
+  - {static} CERO:Integer = 0 {readOnly}
+ 
+  + <<create>> Plan(ip:Integer):void
+  + penalizacionPlan(ips:Integer) : Integer
+  + getIp() : Integer
+  + precioBasePlan() : Real
+  + adicional() : Integer
+}
+
+
+class Individual {
+  - minutosContratados = Integer
+  - {static} TRECIENTOS:Integer = 300 {readOnly}
+  - {static} VEINTE:Integer = 20 {readOnly}
+
+ + <<create>> Individual(minutosContratados:Integer) : void
+ + precioBasePlan() : Real
+ + adicional() : Integer
+}
+
+
+class Grupal {
+  - {static} OCHOCIENTOS:Integer = 800 {readOnly}
+  - {static} QUINIENTOS:Integer = 500 {readOnly}
+
+ + <<create>> Grupal(ip:Integer) : void
+ + precioBasePlan() : Real
+ + adicional() : Integer
+}
+
+class DateLapse {
+  - from : Date
+  - to : Date
+  
+  + <<create>> DateLapse(from:Date,to:Date) : void
+  + getTo() : Date 
+  + getFrom() : Date
+  + sizeInDays() : Long
+  + includesDate(other:Date) : boolean
+  + overlaps(anotherDateLapse : DateLapse) : boolean
+}
+
+
+' Clase Bag genérica
+class Bag<T> extends AbstractCollection<T> implements BagInterface<T> {
+    - bag: Map<T,Integer>
+    
+    + <<create>> Bag() : void
+    + add(key: T) : boolean
+    + occurrencesOf(key: T) : Integer
+    + removeOccurrence(key: T): void
+    + removeAll(key: T): void
+    + size(): integer
+    + sizeUnique(): Integer
+    + iterator(): Iterator<T>
+}
+
+' Relación con Map
+
+interface BagInterface<<interface>>{
+   + add(key: T) : boolean
+    + occurrencesOf(key: T) : integer
+    + removeOccurrence(key: T): void
+    + removeAll(key: T): void
+    + size(): integer
+    + iterator(): Iterator<T>
+
+}
+
+'Clase abstracta AbstractCollection<T>
+abstract class AbstractCollection<T> {
+    ' Métodos abstractos que deben implementar las subclases
+    + abstract iterator(): Iterator<T>
+    + abstract size(): int
+    
+    ' Métodos concretos heredados de Collection<T>
+    + isEmpty(): boolean
+    + contains(o: Object): boolean
+    + toArray(): Object[]
+    + toArray(a: T[]): T[]
+    + add(e: T): boolean
+    + remove(o: Object): boolean
+    + containsAll(c: Collection<?>): boolean
+    + addAll(c: Collection<? extends T>): boolean
+    + removeAll(c: Collection<?>): boolean
+    + retainAll(c: Collection<?>): boolean
+    + clear(): void
+    + equals(o: Object): boolean
+    + hashCode(): integer
+    + stream(): Stream<T>
+    + parallelStream(): Stream<T>
+}
+' Relación con Collection<T>
+
+' Interfaz Map<K,V>
+interface Map<K,V> {
+    + size(): integer
+    + isEmpty(): boolean
+    + containsKey(key: Object): boolean
+    + containsValue(value: Object): boolean
+    + get(key: Object): V
+    + put(key: K, value: V): V
+    + remove(key: Object): V
+    + putAll(m: Map<? extends K,? extends V>): void
+    + clear(): void
+    + keySet(): Set<K>
+    + values(): Collection<V>
+    + entrySet(): Set<Map.Entry<K,V>>
+}
+
+
+Cliente --> "*" Actividad : actividades
+Cliente  --> "1" Plan  :  plan
+SesionJuegos --> "*" Item :Items
+Bag "1" --> "1" Map : uses
+ 
+class ReproduccionVideos extends Actividad
+class SesionJuegos extends Actividad
+
+ 
+class Individual extends Plan
+class Grupal extends Plan
+
+@enduml

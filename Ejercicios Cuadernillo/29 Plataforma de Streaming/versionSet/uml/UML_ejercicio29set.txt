@@ -1,0 +1,113 @@
+@startuml
+
+abstract Cliente <<abstract>> {
+  - nombre:String
+  - fechaAlta : Date
+  - {static} DIEZ:Integer = 10 {readOnly}
+  - {static} CERO:Integer = 0 {readOnly}
+
+  + <<create>> Cliente(nombre:String,plan:Plan) : void
+  + cambioDePlan(plan:Plan) : void
+  + agregarActividad(cctividad:Actividad) : void
+  - mayorA(valor:Integer) : boolean
+  - cantidadDeIpsUtilizadas() : Integer
+  + penalizacion() :Real
+  + montoAcobrarCliente(dateLapse:DateLapse) : Real
+}
+
+abstract Actividad <<abstract>> {
+  - fechaInicio : Date
+  - ipUsada : String
+  - duracion : Integer
+
+  + <<create>> Actividad(ipUsada:String,duracion:Integer) : void
+  + getFecha() : Date
+  + getIpUsada() : String
+  + getDuracion() : Integer
+  + <<abstract>> montoPorActividad() : Real
+}
+
+class ReproduccionVideos {
+  - duracionPublicidad : Integer
+  - {static} DIEZ:Integer = 10 {readOnly}
+
+  + <<create>> ReproducionVideos(ip:String,duracionTotal:Integer,duracionPublicidad:Integer):void
+  + montoPorActividad() : Real
+}
+
+
+class SesionJuegos{
+  - {static} TRECIENTOS:Integer = 300 {readOnly}
+  - {static} CERO:Integer = 0 {readOnly}
+
+  + <<create>> SesionJuegos(ip:String, duracion:Integer):void
+  + agregarItem(item:Item) : void
+  - costoDeItems() : Real
+  + montoPorActividad() : Real
+}
+
+Class Item {
+ - nombre : String
+ - cantidad : Integer
+ - precioUnidad : Real
+ 
+ + <<create>> Item (nombre:String ,cantidad:Integer,precioUnidad:Real) : void
+ + costo() : Real
+}
+
+abstract Plan <<abstract>> {
+  - ip : Integer
+  - {static} CERO:Integer = 0 {readOnly}
+ 
+  + <<create>> Plan(ip:Integer):void
+  + penalizacionPlan(ips:Integer) : Integer
+  + getIp() : Integer
+  + precioBasePlan() : Real
+  + adicional() : Integer
+}
+
+
+class Individual {
+  - minutosContratados = Integer
+  - {static} TRECIENTOS:Integer = 300 {readOnly}
+  - {static} VEINTE:Integer = 20 {readOnly}
+
+ + <<create>> Individual(minutosContratados:Integer) : void
+ + precioBasePlan() : Real
+ + adicional() : Integer
+}
+
+
+class Grupal {
+  - {static} OCHOCIENTOS:Integer = 800 {readOnly}
+  - {static} QUINIENTOS:Integer = 500 {readOnly}
+
+ + <<create>> Grupal(ip:Integer) : void
+ + precioBasePlan() : Real
+ + adicional() : Integer
+}
+
+class DateLapse {
+  - from : Date
+  - to : Date
+  
+  + <<create>> DateLapse(from:Date,to:Date) : void
+  + getTo() : Date 
+  + getFrom() : Date
+  + sizeInDays() : Long
+  + includesDate(other:Date) : boolean
+  + overlaps(anotherDateLapse : DateLapse) : boolean
+}
+
+
+Cliente --> "*" Actividad : actividades
+Cliente --> "1" Plan : plan
+SesionJuegos --> "*" Item :Items
+ 
+class ReproduccionVideos extends Actividad
+class SesionJuegos extends Actividad
+ 
+class Individual extends Plan
+class Grupal extends Plan
+
+@enduml
