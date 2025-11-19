@@ -61,6 +61,6 @@ class PrismaRectangular{
  class Cilindro extends Pieza
  class Esfera extends Pieza
  class PrismaRectangular extends Pieza
- ReporteDeConstruccion--> Pieza :piezas*
+ ReporteDeConstruccion--> "*" Pieza :piezas
 
 @enduml

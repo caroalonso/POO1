@@ -40,6 +40,6 @@ class ConsumoEnergetico {
   + montoTotal(cuadro:CuadroTarifario) : Real
 }
 
-Usuario --> ConsumoEnergetico : consumosDeEnergia*
-Factura --> Usuario : 1 usuario
+Usuario --> " * " ConsumoEnergetico : consumosDeEnergia
+Factura --> "1  " Usuario :  usuario
 @enduml

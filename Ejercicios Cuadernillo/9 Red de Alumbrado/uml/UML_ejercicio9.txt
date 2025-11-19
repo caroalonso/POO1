@@ -12,6 +12,7 @@ class Farola {
 
 }
 
-Farola--> Farola :0..* farolas
+Farola--> "   0..*" Farola : farolas
 
 @enduml
+

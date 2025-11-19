@@ -57,7 +57,7 @@ class Fifo extends JobScheduler
 class Lifo extends JobScheduler
 class MostEffort extends JobScheduler
 class HighestPriority extends JobScheduler
-JobScheduler --> Job :jobs*
+JobScheduler --> "*" Job :jobs
 
 
 @enduml

@@ -45,6 +45,7 @@ class Archivo {
 }
 
 
-ClienteDeCorreo --> Carpeta : carpetas *
-Carpeta --> Email :emails *
-Email --> Archivo : adjuntos *
+ClienteDeCorreo --> "*" Carpeta : carpetas
+Carpeta --> "*" Email :emails 
+Email --> "*" Archivo : adjuntos 
+

@@ -37,6 +37,6 @@ class PlazoFijo {
 
 class Accion implements Inversion
 class PlazoFijo implements Inversion
-Inversor --> Inversion : inversiones*
+Inversor --> " *  " Inversion : inversiones
 
 @enduml

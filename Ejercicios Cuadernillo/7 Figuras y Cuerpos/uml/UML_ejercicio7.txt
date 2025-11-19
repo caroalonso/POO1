@@ -43,6 +43,6 @@ class Cuerpo3D {
 
 class Circulo implements Figura
 class Cuadrado implements Figura
-Cuerpo3D --> Figura :1 figura
+Cuerpo3D --> "  1  " Figura : figura
 
 @enduml

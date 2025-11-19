@@ -57,8 +57,10 @@ class Reserva {
 }
 
 
-Usuario --> Inmueble : inmuebles *
-Usuario --> Reserva : reservas *
-Inmueble --> Reserva : reservas *
-Reserva --> DateLapse : datelapse 1
-Reserva --> Inmueble : inmueble 1
+Usuario --> "*" Inmueble : inmuebles 
+Usuario --> "*" Reserva : reservas 
+Inmueble -->"*" Reserva : reservas 
+Reserva --> "1" DateLapse : datelapse 
+Reserva --> "1" Inmueble : inmueble 
+
+@enduml
