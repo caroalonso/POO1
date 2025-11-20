@@ -1,0 +1,126 @@
+@startuml
+
+class ClienteDeCorreo {
+  - inbox : Carpeta 
+ 
+  + <<create>> ClienteDeCorreo() : void
+  + agregarCarpeta(carpeta:Carpeta) : void
+  + recibir(email:Email) : void
+  + buscar(texto:String) : Email
+  - buscarTextoEnCarpetas(texto:String) : Email
+  + espacioOcupado() : Integer
+  + cantidadTotalDeEmailsCliente() : Integer
+}
+
+class Carpeta {
+  - nombreCarpeta : String
+
+  + <<create>> Carpeta(nombreCarpeta:String) : void
+  + agregarEmail(email:Email) : void
+  + mover(email:Email,destino:Carpeta) : void
+  + buscar(nombre:String) : Email
+  + espacioOcupado() : Integer
+  + getNombre() : String
+  + cantidadEmails() : Integer
+  + categoriasTamanio() : Bag
+}
+
+class Email {
+  - tituloEmail : String
+  - cuerpoEmail : String
+
+  + <<create>> Email (titulo:String,cuerpo:String) : void
+  + agregarArchivo(archivo:Archivo) : void
+  + getTitulo() : String
+  + getCuerpo() : String
+  + getAdjuntos() : Archivo[*]
+  + contienetexto(texto:String) : boolean
+  + +espacioAdjuntos() : Integer
+  + +espacioOcupado() : Integer
+}
+
+
+class Archivo {
+  - nombre:String
+  
+  + <<create>> Archivo(nombre:String) : void
+  + tamanio() : Integer
+}
+
+
+' Clase Bag genérica
+class Bag<T> extends AbstractCollection<T> implements BagInterface<T> {
+    - bag: Map<T,Integer>
+    
+    + <<create>> Bag() : void
+    + add(key: T) : boolean
+    + occurrencesOf(key: T) : Integer
+    + removeOccurrence(key: T): void
+    + removeAll(key: T): void
+    + size(): integer
+    + sizeUnique(): Integer
+    + iterator(): Iterator<T>
+}
+
+' Relación con Map
+
+interface BagInterface<<interface>>{
+   + add(key: T) : boolean
+    + occurrencesOf(key: T) : integer
+    + removeOccurrence(key: T): void
+    + removeAll(key: T): void
+    + size(): integer
+    + iterator(): Iterator<T>
+
+}
+
+'Clase abstracta AbstractCollection<T>
+abstract class AbstractCollection<T> {
+    ' Métodos abstractos que deben implementar las subclases
+    + abstract iterator(): Iterator<T>
+    + abstract size(): int
+    
+    ' Métodos concretos heredados de Collection<T>
+    + isEmpty(): boolean
+    + contains(o: Object): boolean
+    + toArray(): Object[]
+    + toArray(a: T[]): T[]
+    + add(e: T): boolean
+    + remove(o: Object): boolean
+    + containsAll(c: Collection<?>): boolean
+    + addAll(c: Collection<? extends T>): boolean
+    + removeAll(c: Collection<?>): boolean
+    + retainAll(c: Collection<?>): boolean
+    + clear(): void
+    + equals(o: Object): boolean
+    + hashCode(): integer
+    + stream(): Stream<T>
+    + parallelStream(): Stream<T>
+}
+' Relación con Collection<T>
+
+' Interfaz Map<K,V>
+interface Map<K,V> {
+    + size(): integer
+    + isEmpty(): boolean
+    + containsKey(key: Object): boolean
+    + containsValue(value: Object): boolean
+    + get(key: Object): V
+    + put(key: K, value: V): V
+    + remove(key: Object): V
+    + putAll(m: Map<? extends K,? extends V>): void
+    + clear(): void
+    + keySet(): Set<K>
+    + values(): Collection<V>
+    + entrySet(): Set<Map.Entry<K,V>>
+}
+
+
+
+ClienteDeCorreo --> "*" Carpeta : carpetas
+Carpeta --> "*" Email :emails 
+Email --> "*" Archivo : adjuntos 
+Bag "1" --> "1" Map : uses
+
+@enduml
+

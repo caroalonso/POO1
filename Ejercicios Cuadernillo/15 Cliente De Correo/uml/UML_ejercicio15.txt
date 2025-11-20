@@ -49,3 +49,4 @@ ClienteDeCorreo --> "*" Carpeta : carpetas
 Carpeta --> "*" Email :emails 
 Email --> "*" Archivo : adjuntos 
 
+@enduml
