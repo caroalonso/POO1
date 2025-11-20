@@ -28,6 +28,7 @@
 - 💻 [Sistema De Pedidos](https://github.com/caroalonso/POO1/tree/main/Ejercicios%20Cuadernillo/22%20Sistema%20de%20Pedidos)
 - 💻 [GreenHoome](https://github.com/caroalonso/POO1/tree/main/Ejercicios%20Cuadernillo/24%20GreenHoome)
 - 💻 [Bag](https://github.com/caroalonso/POO1/tree/main/Ejercicios%20Cuadernillo/25%20Bag)
+- 💻 [Estadísticas del cliente de correos](https://github.com/caroalonso/POO1/tree/main/Ejercicios%20Cuadernillo/26%20Estad%C3%ADsticas%20del%20cliente%20de%20correos)
 - 💻 [Plataforma De Streaming](https://github.com/caroalonso/POO1/tree/main/Ejercicios%20Cuadernillo/29%20Plataforma%20de%20Streaming)
 
 ### 📄 [Ejercicios De Redictado:]() 
