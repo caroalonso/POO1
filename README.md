@@ -42,6 +42,7 @@
 - 💻 [Impuestos (B)](https://github.com/caroalonso/POO1/tree/main/Parciales%20Cursada%20Regular/Parcial%20Impuestos%20B)
 - 💻 [My CarBoxes](https://github.com/caroalonso/POO1/tree/main/Parciales%20Cursada%20Regular/Parcial%20MyCarBoxes)
 - 💻 [Mercado Online](https://github.com/caroalonso/POO1/tree/main/Parciales%20Cursada%20Regular/Parcial%20MercadoOnline)
+- 💻 [Primera Fecha 2025](https://github.com/caroalonso/POO1/tree/main/Parciales%20Cursada%20Regular/Parcial%20Primera%20Fecha%202025)
 
 ---
 ### 📍[Parciales  De Redictado:]()
