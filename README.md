@@ -1,7 +1,7 @@
 # 📌 **Orientación a Objetos 1**
 
 
-### 📄 [Ejercicios De Cuadernillo:]()
+### 📒 [Ejercicios De Cuadernillo:]()
 
 - 💻 [WallPost](https://github.com/caroalonso/POO1/tree/main/Ejercicios%20Cuadernillo/1%20WallPost)
 - 💻 [Balanza Electrónica](https://github.com/caroalonso/POO1/tree/main/Ejercicios%20Cuadernillo/2%20Balanza%20Electr%C3%B3nica)
